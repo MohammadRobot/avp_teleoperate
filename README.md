@@ -483,3 +483,49 @@ This code builds upon following open-source code-bases. Please visit the URLs to
 10) https://github.com/facebookresearch/detr
 11) https://github.com/Dingry/BunnyVisionPro
 12) https://github.com/unitreerobotics/unitree_sdk2_python
+
+
+# 7. Trublshooting
+
+## Getting casadi error:
+
+```bash
+ImportError: cannot import name 'casadi' from 'pinocchio'
+```
+This means the version of the Pinocchio library you're using does not include CasADi bindings, which are optional and not installed by default.
+
+✅ Step-by-Step Fix
+🛠️ Step 1: Check Python environment
+You're using the tv Conda environment, so all changes will be applied there.
+
+🔍 Step 2: Uninstall existing Pinocchio
+First, remove the version that lacks CasADi support:
+
+```bash
+pip uninstall pinocchio
+conda uninstall pinocchio
+```
+Repeat this if it appears multiple times until it says it's not installed.
+
+🌐 Step 3: Install Pinocchio with CasADi support
+
+Use robotpkg (recommended)
+Robotpkg provides properly built Pinocchio with CasADi bindings.
+
+1. Install dependencies:
+```bash
+sudo apt update
+sudo apt install -y robotpkg-py38-pinocchio robotpkg-py38-casadi
+```
+2. Add robotpkg to your PYTHONPATH and LD_LIBRARY_PATH:
+Edit ~/.bashrc and add:
+
+```bash
+export PYTHONPATH=/opt/openrobots/lib/python3.8/site-packages:$PYTHONPATH
+export LD_LIBRARY_PATH=/opt/openrobots/lib:$LD_LIBRARY_PATH
+```
+Then run:
+
+```bash
+source ~/.bashrc
+```

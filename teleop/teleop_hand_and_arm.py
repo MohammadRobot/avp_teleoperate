@@ -23,14 +23,14 @@ from teleop.utils.episode_writer import EpisodeWriter
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--task_dir', type = str, default = './utils/data', help = 'path to save data')
-    parser.add_argument('--frequency', type = int, default = 30.0, help = 'save data\'s frequency')
+    parser.add_argument('--frequency', type = int, default = 5.0, help = 'save data\'s frequency')
 
     parser.add_argument('--record', action = 'store_true', help = 'Save data or not')
     parser.add_argument('--no-record', dest = 'record', action = 'store_false', help = 'Do not save data')
     parser.set_defaults(record = False)
 
     parser.add_argument('--arm', type=str, choices=['G1_29', 'G1_23', 'H1_2', 'H1'], default='G1_29', help='Select arm controller')
-    parser.add_argument('--hand', type=str, choices=['dex3', 'gripper', 'inspire1'], help='Select hand controller')
+    parser.add_argument('--hand', type=str, choices=['dex3', 'gripper', 'inspire1'], default='dex3', help='Select hand controller')
 
     args = parser.parse_args()
     print(f"args:{args}\n")
@@ -38,12 +38,12 @@ if __name__ == '__main__':
     # image client: img_config should be the same as the configuration in image_server.py (of Robot's development computing unit)
     img_config = {
         'fps': 30,
-        'head_camera_type': 'opencv',
-        'head_camera_image_shape': [480, 1280],  # Head camera resolution
-        'head_camera_id_numbers': [0],
-        'wrist_camera_type': 'opencv',
-        'wrist_camera_image_shape': [480, 640],  # Wrist camera resolution
-        'wrist_camera_id_numbers': [2, 4],
+        'head_camera_type': 'realsense',
+        'head_camera_image_shape': [720, 1280],  # Head camera resolution
+        'head_camera_id_numbers': ["233622078452"],
+        # 'wrist_camera_type': 'opencv',
+        # 'wrist_camera_image_shape': [480, 640],  # Wrist camera resolution
+        # 'wrist_camera_id_numbers': [2, 4],
     }
     ASPECT_RATIO_THRESHOLD = 2.0 # If the aspect ratio exceeds this value, it is considered binocular
     if len(img_config['head_camera_id_numbers']) > 1 or (img_config['head_camera_image_shape'][1] / img_config['head_camera_image_shape'][0] > ASPECT_RATIO_THRESHOLD):
