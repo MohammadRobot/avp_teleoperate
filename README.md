@@ -105,7 +105,7 @@ For more information, you can refer to [Official Documentation ](https://support
 unitree@Host:~$ conda create -n tv python=3.8
 unitree@Host:~$ conda activate tv
 # If you use `pip install`, Make sure pinocchio version is 3.1.0
-(tv) unitree@Host:~$ conda install pinocchio -c conda-forge
+(tv) unitree@Host:~$ conda install -c conda-forge pinocchio=3.1.0
 (tv) unitree@Host:~$ pip install meshcat
 (tv) unitree@Host:~$ pip install casadi
 ```
@@ -206,11 +206,41 @@ The system specifications of PICO 4 Ultra Enterprise:
 
 > System Version: 5.12.6.U; Android version number: 14; Software version number: c000_cf01_bv1.0.1_sv5.12.6_202412121344_sparrow_b4244_user; browser version: [4.0.28 beta version](https://github.com/vuer-ai/vuer/issues/45#issuecomment-2674918619)
 
-The system specifications of Meta-Quest 3:
+### The system specifications of Meta-Quest 3:
 
 > System version: 49829370066100510; Version: 62.0.0.273.343.570372087; Runtime version: 62.0.0.269.341.570372063; OS version: SQ3A.220605.009.A1.
 
 For more configuration steps, please refer to the [issue](https://github.com/unitreerobotics/avp_teleoperate/issues/32).
+
+```bash 
+cd ~/Downloads/platform-tools-latest-linux/platform-tools/
+
+sudo ./adb devices
+
+sudo ./adb -s 2G0YC5ZH0900NF reverse tcp:8012 tcp:8012
+
+
+sudo ./adb -s 2G0YC5ZH0900NF reverse --list
+
+
+
+wifi
+
+
+$ sudo ./adb shell ifconfig wlan0
+
+$ sudo ./adb tcpip 5566
+restarting in TCP mode port: 5566
+$ sudo ./adb connect 192.168.1.168:5566
+connected to your_xr_device_ip:5566
+$ sudo ./adb devices
+List of devices attached
+your_xr_device_ip:5566	device
+$ sudo ./adb -s 192.168.1.168:5566 reverse tcp:8012 tcp:8012
+8012
+$ sudo ./adb -s 192.168.1.168:5566 reverse --list
+host-28 tcp:8012 tcp:8012
+```
 
 ## 2.3 🔎 Unit Test
 
